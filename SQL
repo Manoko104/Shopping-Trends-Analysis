@@ -1,3 +1,4 @@
+----Date
 SELECT TO_DATE(PROCESSDATE) AS Purchase_date,
        DAYNAME(TO_DATE(PROCESSDATE)) AS Day_name,
        MONTHNAME(TO_DATE(PROCESSDATE)) AS Month_name,
@@ -7,7 +8,8 @@ SELECT TO_DATE(PROCESSDATE) AS Purchase_date,
        
     ---aggregation
        SUM("Purchase Amount (USD)") AS Revenue,
-       COUNT (DISTINCT CUSTOMER_ID) AS Nmuber_of_Customers,
+       COUNT (DISTINCT CUSTOMER_ID) AS Number_of_Customers,
+      
        
         SUBSCRIPTION_STATUS,
         SHIPPING_TYPE,
@@ -21,6 +23,7 @@ SELECT TO_DATE(PROCESSDATE) AS Purchase_date,
         SIZE,
         COLOR,
         SEASON,
+        GENDER,
         
 
         CASE 
@@ -48,7 +51,7 @@ SELECT TO_DATE(PROCESSDATE) AS Purchase_date,
             WHEN PREVIOUS_PURCHASES BETWEEN 2 AND 10 THEN 'Frequent'
             WHEN PREVIOUS_PURCHASES BETWEEN 10 AND 30 THEN 'Loyal'
             ELSE 'VIP'
-            END AS Buying_behavior,
+            END AS Shoppers,
             
     
 FROM SHOPPINGTRENDS.PUBLIC.SALES

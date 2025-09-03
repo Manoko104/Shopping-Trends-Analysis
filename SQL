@@ -15,6 +15,13 @@ SELECT TO_DATE(PROCESSDATE) AS Purchase_date,
         PROMO_CODE_USED,
         PAYMENT_METHOD,
         FREQUENCY_OF_PURCHASES,
+        ITEM_PURCHASED,
+        CATEGORY,
+        LOCATION,
+        SIZE,
+        COLOR,
+        SEASON,
+        
 
         CASE 
             WHEN REVIEW_RATING BETWEEN 2.5 AND 3.0 THEN 'Bad'
@@ -35,6 +42,14 @@ SELECT TO_DATE(PROCESSDATE) AS Purchase_date,
              WHEN AGE BETWEEN 41 AND 50 THEN 'Senior'
              ELSE 'Elder'
              END AS Age_Buckets,
+
+        CASE 
+            WHEN PREVIOUS_PURCHASES BETWEEN 0 AND 1 THEN 'One_Time_Buyer'
+            WHEN PREVIOUS_PURCHASES BETWEEN 2 AND 10 THEN 'Frequent'
+            WHEN PREVIOUS_PURCHASES BETWEEN 10 AND 30 THEN 'Loyal'
+            ELSE 'VIP'
+            END AS Buying_behavior,
+            
     
 FROM SHOPPINGTRENDS.PUBLIC.SALES
 GROUP BY ALL;

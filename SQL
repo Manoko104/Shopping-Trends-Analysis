@@ -1,0 +1,40 @@
+SELECT TO_DATE(PROCESSDATE) AS Purchase_date,
+       DAYNAME(TO_DATE(PROCESSDATE)) AS Day_name,
+       MONTHNAME(TO_DATE(PROCESSDATE)) AS Month_name,
+       TO_CHAR(TO_DATE(PROCESSDATE), 'YYYY-MM') AS Month_id,
+       DAYOFMONTH(TO_DATE(PROCESSDATE)) AS Day_of_Month,
+       YEAR(TO_DATE(PROCESSDATE)) AS Year,
+       
+    ---aggregation
+       SUM("Purchase Amount (USD)") AS Revenue,
+       COUNT (DISTINCT CUSTOMER_ID) AS Nmuber_of_Customers,
+       
+        SUBSCRIPTION_STATUS,
+        SHIPPING_TYPE,
+        DISCOUNT_APPLIED,
+        PROMO_CODE_USED,
+        PAYMENT_METHOD,
+        FREQUENCY_OF_PURCHASES,
+
+        CASE 
+            WHEN REVIEW_RATING BETWEEN 2.5 AND 3.0 THEN 'Bad'
+            WHEN REVIEW_RATING BETWEEN 3.1 AND 4.0 THEN 'Good'
+            ELSE 'Best'
+            END AS Review_Rating_buckets,
+
+        CASE 
+            WHEN "Purchase Amount (USD)" BETWEEN 20 AND 30 THEN '01. 20-30: Low Spend'
+            WHEN "Purchase Amount (USD)" BETWEEN 31 AND 50 THEN '01. 31-50: Medium Spend'
+            WHEN "Purchase Amount (USD)" BETWEEN 51 AND 70 THEN '01. 51-70: High Spend'
+            ELSE '04. 70+ Very High Spend'
+            END AS Spend_buckets,
+
+        CASE
+             WHEN AGE BETWEEN 18 AND 25 THEN 'Youth'
+             WHEN AGE BETWEEN 25 AND 40 THEN 'Adult'
+             WHEN AGE BETWEEN 41 AND 50 THEN 'Senior'
+             ELSE 'Elder'
+             END AS Age_Buckets,
+    
+FROM SHOPPINGTRENDS.PUBLIC.SALES
+GROUP BY ALL;
